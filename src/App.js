@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [question, setQuestion] = useState('');
+
+  const onSubmit = useCallback(e => {
+    e.preventDefault();
+    // TODO
+    console.log(`Question: ${question}`);
+  }, [question]);
+
+  const onQuestionChange = useCallback(e => {
+    setQuestion(e.target.value);
+  }, [setQuestion]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={onSubmit}>
+        <label>Enter a question:</label>
+        <input
+          type="text"
+          placeholder="What color is the shape?"
+          value={question}
+          onChange={onQuestionChange}
+        />
+        <br />
+        <input type="submit" />
+      </form>
     </div>
   );
 }
