@@ -13,3 +13,11 @@ input[type='text'] {
   padding: 5px;
   font-size: 14px;
 }
+
+#main-canvas {
+  border: 1px solid;
+}
+
+#small-canvas {
+  display: none;
+}
