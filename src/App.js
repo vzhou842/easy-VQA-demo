@@ -34,7 +34,7 @@ function App() {
 
   function getInference(imageData, questionBOW) {
     console.log('called getInference');
-    tf.loadLayersModel('https://atlantic-question.glitch.me/assets/model.json').then(model => {
+    tf.loadLayersModel('https://pkwang.glitch.me/assets/model.json').then(model => {
       console.log('Successfully loaded weights');
       let imageTensor = tf.browser.fromPixels(imageData, 3);
       imageTensor = imageTensor.expandDims(0);
