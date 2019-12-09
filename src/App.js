@@ -1,11 +1,14 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { getInference } from './model';
-import { IMAGE_SIZE } from './constants';
+import { IMAGE_SIZE, MIN_SHAPE_SIZE, MAX_SHAPE_SIZE } from './constants';
 
 import './App.css';
 
 const CANVAS_SIZE = 256;
+const CANVAS_RATIO = CANVAS_SIZE / IMAGE_SIZE;
+const MIN_CANVAS_SHAPE_SIZE = MIN_SHAPE_SIZE * CANVAS_RATIO;
+const MAX_CANVAS_SHAPE_SIZE = MAX_SHAPE_SIZE * CANVAS_RATIO;
 
 function App() {
   const [question, setQuestion] = useState('');
@@ -29,10 +32,32 @@ function App() {
     setQuestion(e.target.value);
   }, [setQuestion]);
 
+  const randomizeImage = useCallback(() => {
+    const context = mainCanvas.current.getContext('2d');
+
+    // Background
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+    // Shape
+    context.fillStyle = 'black';
+    const w = Math.random() * (MAX_CANVAS_SHAPE_SIZE - MIN_CANVAS_SHAPE_SIZE) + MIN_CANVAS_SHAPE_SIZE;
+    const h = Math.random() * (MAX_CANVAS_SHAPE_SIZE - MIN_CANVAS_SHAPE_SIZE) + MIN_CANVAS_SHAPE_SIZE;
+    context.fillRect(
+      Math.random() * (CANVAS_SIZE - w),
+      Math.random() * (CANVAS_SIZE - h),
+      w,
+      h,
+    );
+  }, [mainCanvas]);
+
+  useEffect(randomizeImage, []);
+
   return (
     <div className="App">
       <canvas ref={mainCanvas} width={CANVAS_SIZE} height={CANVAS_SIZE} />
       <canvas ref={smallCanvas} width={IMAGE_SIZE} height={IMAGE_SIZE} style={{ display: 'none' }} />
+      <button onClick={randomizeImage}>Randomize Image</button>
       <form onSubmit={onSubmit}>
         <label>Enter a question:</label>
         <input
