@@ -1,8 +1,11 @@
 import React, { useCallback, useRef, useState } from 'react';
 
 import { getInference } from './model';
+import { IMAGE_SIZE } from './constants';
 
 import './App.css';
+
+const CANVAS_SIZE = 256;
 
 function App() {
   const [question, setQuestion] = useState('');
@@ -13,8 +16,12 @@ function App() {
   const onSubmit = useCallback(e => {
     e.preventDefault();
 
-    let canvas = document.getElementById('main-canvas');
-    scaleImageData();
+    // Draw the main canvas to our smaller, correctly-sized canvas
+    const ctx = smallCanvas.current.getContext('2d');
+    const ratio = IMAGE_SIZE / CANVAS_SIZE;
+    ctx.scale(ratio, ratio);
+    ctx.drawImage(mainCanvas.current, 0, 0);
+
     getInference(smallCanvas.current, question);
   }, [question]);
 
@@ -22,16 +29,10 @@ function App() {
     setQuestion(e.target.value);
   }, [setQuestion]);
 
-  function scaleImageData() {
-    const ctx = smallCanvas.current.getContext('2d');
-    ctx.scale(0.5, 0.5);
-    ctx.drawImage(mainCanvas.current, 0, 0);
-  }
-
   return (
     <div className="App">
-      <canvas ref={mainCanvas} width="128" height="128" />
-      <canvas ref={smallCanvas} width="64" height="64" style={{ display: 'none' }} />
+      <canvas ref={mainCanvas} width={CANVAS_SIZE} height={CANVAS_SIZE} />
+      <canvas ref={smallCanvas} width={IMAGE_SIZE} height={IMAGE_SIZE} style={{ display: 'none' }} />
       <form onSubmit={onSubmit}>
         <label>Enter a question:</label>
         <input
