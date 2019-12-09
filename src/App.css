@@ -14,10 +14,6 @@ input[type='text'] {
   font-size: 14px;
 }
 
-#main-canvas {
+canvas {
   border: 1px solid;
-}
-
-#small-canvas {
-  display: none;
 }
