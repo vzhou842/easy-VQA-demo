@@ -2,6 +2,13 @@ import * as tf from '@tensorflow/tfjs';
 
 import {WORD_INDEX, ANSWERS} from './constants';
 
+const loadModelPromise = tf.loadLayersModel('https://pkwang.glitch.me/assets/model.json')
+  .then(model => {
+    console.log('Successfully loaded weights');
+    return model;
+  })
+  .catch(console.error);
+
 function getBagOfWords(str) {
   str = str.replace(/[^\w\s]|_/g, '')
     .replace(/\s+/g, ' ')
@@ -19,19 +26,20 @@ function getBagOfWords(str) {
 }
 
 export function getInference(imageData, question) {
-  console.log('called getInference');
   const questionBOW = getBagOfWords(question);
-  tf.loadLayersModel('https://pkwang.glitch.me/assets/model.json').then(model => {
-    console.log('Successfully loaded weights');
+  loadModelPromise.then(model => {
+    console.log('Performing inference...');
     let imageTensor = tf.browser.fromPixels(imageData, 3);
     imageTensor = imageTensor.expandDims(0);
     imageTensor.print();
+
     let questionTensor = tf.tensor(questionBOW);
     questionTensor = questionTensor.expandDims(0);
+    questionTensor.print();
+
     let output = model.predict([imageTensor, questionTensor]);
     let finalIdx = output.argMax(1).arraySync();
 
     console.log('Answer:', ANSWERS[finalIdx[0]]);
-  })
-  .catch(err => console.log(err));
+  });
 }
