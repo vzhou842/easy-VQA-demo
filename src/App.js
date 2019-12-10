@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { getInference } from './model';
-import { IMAGE_SIZE, MIN_SHAPE_SIZE, MAX_SHAPE_SIZE } from './constants';
+import { IMAGE_SIZE, MIN_SHAPE_SIZE, MAX_SHAPE_SIZE, COLORS } from './constants';
 
 import './App.css';
 
@@ -37,14 +37,14 @@ function App() {
 
     // Background color
     // The range (230, 255) matches the corresponding range in easy-VQA
-    const r = Math.round(230 + Math.random() * 25);
-    const g = Math.round(230 + Math.random() * 25);
-    const b = Math.round(230 + Math.random() * 25);
+    const r = Math.floor(230 + Math.random() * 26);
+    const g = Math.floor(230 + Math.random() * 26);
+    const b = Math.floor(230 + Math.random() * 26);
     context.fillStyle = `rgb(${r}, ${g}, ${b})`;
     context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
     // Shape
-    context.fillStyle = 'black';
+    context.fillStyle = COLORS[Math.floor(Math.random() * COLORS.length)];
     const w = Math.random() * (MAX_CANVAS_SHAPE_SIZE - MIN_CANVAS_SHAPE_SIZE) + MIN_CANVAS_SHAPE_SIZE;
     const h = Math.random() * (MAX_CANVAS_SHAPE_SIZE - MIN_CANVAS_SHAPE_SIZE) + MIN_CANVAS_SHAPE_SIZE;
     context.fillRect(
