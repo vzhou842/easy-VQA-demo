@@ -35,8 +35,12 @@ function App() {
   const randomizeImage = useCallback(() => {
     const context = mainCanvas.current.getContext('2d');
 
-    // Background
-    context.fillStyle = 'white';
+    // Background color
+    // The range (230, 255) matches the corresponding range in easy-VQA
+    const r = Math.round(230 + Math.random() * 25);
+    const g = Math.round(230 + Math.random() * 25);
+    const b = Math.round(230 + Math.random() * 25);
+    context.fillStyle = `rgb(${r}, ${g}, ${b})`;
     context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
     // Shape
