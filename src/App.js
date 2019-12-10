@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { getInference } from './model';
 import { IMAGE_SIZE, MIN_SHAPE_SIZE, MAX_SHAPE_SIZE, COLORS } from './constants';
+import { randint } from './utils';
 
 import './App.css';
 
@@ -39,19 +40,19 @@ function App() {
 
     // Background color
     // The range (230, 255) matches the corresponding range in easy-VQA
-    const r = Math.floor(230 + Math.random() * 26);
-    const g = Math.floor(230 + Math.random() * 26);
-    const b = Math.floor(230 + Math.random() * 26);
+    const r = randint(230, 255);
+    const g = randint(230, 255);
+    const b = randint(230, 255);
     context.fillStyle = `rgb(${r}, ${g}, ${b})`;
     context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
     // Shape
-    context.fillStyle = COLORS[Math.floor(Math.random() * COLORS.length)];
-    const w = Math.random() * (MAX_CANVAS_SHAPE_SIZE - MIN_CANVAS_SHAPE_SIZE) + MIN_CANVAS_SHAPE_SIZE;
-    const h = Math.random() * (MAX_CANVAS_SHAPE_SIZE - MIN_CANVAS_SHAPE_SIZE) + MIN_CANVAS_SHAPE_SIZE;
+    context.fillStyle = COLORS[randint(0, COLORS.length - 1)];
+    const w = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
+    const h = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
     context.fillRect(
-      Math.random() * (CANVAS_SIZE - w),
-      Math.random() * (CANVAS_SIZE - h),
+      randint(0, CANVAS_SIZE - w),
+      randint(0, CANVAS_SIZE - h),
       w,
       h,
     );
