@@ -12,11 +12,12 @@ const MAX_CANVAS_SHAPE_SIZE = MAX_SHAPE_SIZE * CANVAS_RATIO;
 
 function App() {
   const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState(null);
 
   const mainCanvas = useRef(null);
   const smallCanvas = useRef(null);
 
-  const onSubmit = useCallback(e => {
+  const onSubmit = useCallback(async e => {
     e.preventDefault();
 
     // Draw the main canvas to our smaller, correctly-sized canvas
@@ -25,8 +26,9 @@ function App() {
     ctx.scale(ratio, ratio);
     ctx.drawImage(mainCanvas.current, 0, 0);
 
-    getInference(smallCanvas.current, question);
-  }, [question]);
+    const answer = await getInference(smallCanvas.current, question);
+    setAnswer(answer);
+  }, [question, setAnswer]);
 
   const onQuestionChange = useCallback(e => {
     setQuestion(e.target.value);
@@ -73,6 +75,9 @@ function App() {
         <br />
         <input type="submit" />
       </form>
+      {!!answer && (
+        <p>Prediction: <b>{answer}</b></p>
+      )}
     </div>
   );
 }

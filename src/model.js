@@ -24,9 +24,9 @@ function getBagOfWords(str) {
   return bagOfWords;
 }
 
-export function getInference(imageData, question) {
+export async function getInference(imageData, question) {
   const questionBOW = getBagOfWords(question);
-  loadModelPromise.then(model => {
+  return loadModelPromise.then(model => {
     console.log('Performing inference...');
     let imageTensor = tf.browser.fromPixels(imageData, 3);
     imageTensor = imageTensor.expandDims(0);
@@ -38,9 +38,9 @@ export function getInference(imageData, question) {
     questionTensor.print();
 
     let output = model.predict([imageTensor, questionTensor]);
-    let finalIdx = output.argMax(1).arraySync();
-
-    console.log('Answer:', ANSWERS[finalIdx[0]]);
+    output.print();
+    let [answerIndex] = output.argMax(1).arraySync();
+    return ANSWERS[answerIndex];
   })
   .catch(console.error);
 }
