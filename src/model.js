@@ -6,8 +6,7 @@ const loadModelPromise = tf.loadLayersModel('https://pkwang.glitch.me/assets/mod
   .then(model => {
     console.log('Successfully loaded weights');
     return model;
-  })
-  .catch(console.error);
+  });
 
 function getBagOfWords(str) {
   str = str.replace(/[^\w\s]|_/g, '')
@@ -31,6 +30,7 @@ export function getInference(imageData, question) {
     console.log('Performing inference...');
     let imageTensor = tf.browser.fromPixels(imageData, 3);
     imageTensor = imageTensor.expandDims(0);
+    imageTensor = imageTensor.div(255).sub(0.5);
     imageTensor.print();
 
     let questionTensor = tf.tensor(questionBOW);
@@ -41,5 +41,6 @@ export function getInference(imageData, question) {
     let finalIdx = output.argMax(1).arraySync();
 
     console.log('Answer:', ANSWERS[finalIdx[0]]);
-  });
+  })
+  .catch(console.error);
 }
