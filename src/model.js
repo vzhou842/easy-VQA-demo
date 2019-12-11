@@ -9,18 +9,21 @@ const loadModelPromise = tf.loadLayersModel('https://pkwang.glitch.me/assets/mod
   });
 
 function getBagOfWords(str) {
-  str = str.replace(/[^\w\s]|_/g, '')
+  str = str.trim()
+    .replace(/[^\w\s]|_/g, '')
     .replace(/\s+/g, ' ')
-    .replace(/[0-9]/g, '')
     .toLowerCase();
 
-  let tokens = str.split(' ');
-  let bagOfWords = Array(Object.keys(WORD_INDEX).length).fill(0);
+  // We have to add 1 to maintain consistency with how the BOW vectors are
+  // generated in our Python implementation. See easy-VQA-keras for more.
+  const bagOfWords = Array(Object.keys(WORD_INDEX).length + 1).fill(0);
+
+  const tokens = str.split(' ');
   tokens.forEach(token => {
     if (token in WORD_INDEX) {
       bagOfWords[WORD_INDEX[token]] += 1;
     }
-  })
+  });
   return bagOfWords;
 }
 
