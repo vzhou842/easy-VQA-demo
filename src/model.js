@@ -2,7 +2,7 @@ import * as tf from '@tensorflow/tfjs';
 
 import {WORD_INDEX, ANSWERS} from './constants';
 
-const loadModelPromise = tf.loadLayersModel('https://pkwang.glitch.me/assets/model.json')
+const loadModelPromise = tf.loadLayersModel('https://phillipkwang.com/hostfiles/easy_vqa_model/model.json')
   .then(model => {
     console.log('Successfully loaded weights');
     return model;
