@@ -32,25 +32,30 @@ function App() {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState(null);
   const [modelLoaded, setModelLoaded] = useState(false);
+  const [predicting, setPredicting] = useState(false);
 
   const mainCanvas = useRef(null);
   const smallCanvas = useRef(null);
 
-  const onPredict = useCallback(
-    async e => {
-      e.preventDefault();
+  const onPredict = useCallback(() => {
+    setPredicting(true);
+  }, [setPredicting]);
 
+  useEffect(() => {
+    if (predicting) {
       // Draw the main canvas to our smaller, correctly-sized canvas
       const ctx = smallCanvas.current.getContext('2d');
       const ratio = IMAGE_SIZE / CANVAS_SIZE;
       ctx.scale(ratio, ratio);
       ctx.drawImage(mainCanvas.current, 0, 0);
 
-      const answer = await getInference(smallCanvas.current, question);
-      setAnswer(answer);
-    },
-    [question, setAnswer]
-  );
+      getInference(smallCanvas.current, question).then(answer => {
+        setAnswer(answer);
+        setPredicting(false);
+      });
+    }
+  // ONLY run this effect when changing predicting to true
+  }, [predicting]);
 
   const onQuestionChange = useCallback(
     e => {
@@ -80,7 +85,7 @@ function App() {
   const randomizeQuestion = useCallback(() => {
     const q = SAMPLE_QUESTIONS[randint(0, SAMPLE_QUESTIONS.length - 1)];
     setQuestion(q);
-  }, []);
+  }, [setQuestion]);
 
   useEffect(() => {
     randomizeImage();
@@ -137,9 +142,9 @@ function App() {
         variant="success"
         size="lg"
         onClick={onPredict}
-        disabled={!modelLoaded || question.length === 0}
+        disabled={!modelLoaded || predicting || question.length === 0}
       >
-        {modelLoaded ? 'Predict' : 'Loading model...'}
+        {modelLoaded ? (predicting ? 'Predicting...' : 'Predict') : 'Loading model...'}
       </Button>
       <br />
       {!!answer && (
