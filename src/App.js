@@ -16,6 +16,18 @@ const CANVAS_RATIO = CANVAS_SIZE / IMAGE_SIZE;
 const MIN_CANVAS_SHAPE_SIZE = MIN_SHAPE_SIZE * CANVAS_RATIO;
 const MAX_CANVAS_SHAPE_SIZE = MAX_SHAPE_SIZE * CANVAS_RATIO;
 
+const SAMPLE_QUESTIONS = [
+  "What color is the shape?",
+  "Is there a blue shape in the image?",
+  "Is there a red shape in the image?",
+  "Does the image contain a rectangle?",
+  "What shape is present?",
+  "Is no triangle present?",
+  "Is a circle present?",
+  "What is the color of the shape?",
+  "What shape does the image contain?",
+];
+
 function App() {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState(null);
@@ -64,6 +76,11 @@ function App() {
     context.fillRect(randint(0, CANVAS_SIZE - w), randint(0, CANVAS_SIZE - h), w, h);
   }, [mainCanvas]);
 
+  const randomizeQuestion = useCallback(() => {
+    const q = SAMPLE_QUESTIONS[randint(0, SAMPLE_QUESTIONS.length - 1)];
+    setQuestion(q);
+  }, []);
+
   useEffect(randomizeImage, []);
 
   return (
@@ -82,7 +99,7 @@ function App() {
             />
             <br />
             <Card.Text>Want a different image?</Card.Text>
-            <Button onClick={randomizeImage}>Randomize Image</Button>
+            <Button onClick={randomizeImage}>Random Image</Button>
           </Card.Body>
         </Card>
         <Card>
@@ -92,13 +109,15 @@ function App() {
               <Form.Group controlId="formQuestion">
                 <Form.Label>Enter a question:</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="What color is the shape?"
+                  as="textarea"
+                  placeholder={SAMPLE_QUESTIONS[0]}
                   value={question}
                   onChange={onQuestionChange}
                 />
               </Form.Group>
             </Form>
+            <Card.Text>Want a different question?</Card.Text>
+            <Button onClick={randomizeQuestion}>Random Question</Button>
           </Card.Body>
         </Card>
       </div>

@@ -10,11 +10,11 @@
   margin-bottom: 20px;
 }
 
-input[type='text'] {
-  width: 256px;
-}
-
 .card {
   margin: 10px;
+  width: 300px;
 }
 
+.card-text {
+  margin-bottom: 0.5rem;
+}
