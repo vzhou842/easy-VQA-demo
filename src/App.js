@@ -19,17 +19,22 @@ const MAX_CANVAS_SHAPE_SIZE = MAX_SHAPE_SIZE * CANVAS_RATIO;
 const SAMPLE_QUESTIONS = [
   'What color is the shape?',
   'Is there a blue shape in the image?',
-  'Is there a red shape in the image?',
+  'Is there a red shape?',
+  'Is there a green shape in the image?',
+  'Is there a black shape?',
   'Does the image contain a rectangle?',
   'What shape is present?',
   'Is no triangle present?',
   'Is a circle present?',
+  'Is a rectangle present?',
   'What is the color of the shape?',
   'What shape does the image contain?',
 ];
 
+const randomQuestion = () => SAMPLE_QUESTIONS[randint(0, SAMPLE_QUESTIONS.length - 1)];
+
 function App() {
-  const [question, setQuestion] = useState('');
+  const [question, setQuestion] = useState(randomQuestion());
   const [answer, setAnswer] = useState(null);
   const [modelLoaded, setModelLoaded] = useState(false);
   const [predicting, setPredicting] = useState(false);
@@ -83,7 +88,7 @@ function App() {
   }, [mainCanvas]);
 
   const randomizeQuestion = useCallback(() => {
-    const q = SAMPLE_QUESTIONS[randint(0, SAMPLE_QUESTIONS.length - 1)];
+    const q = randomQuestion();
     setQuestion(q);
   }, [setQuestion]);
 
@@ -126,7 +131,6 @@ function App() {
           <Card.Body>
             <Form>
               <Form.Group controlId="formQuestion">
-                <Form.Label>Enter a question:</Form.Label>
                 <Form.Control
                   as="textarea"
                   placeholder={SAMPLE_QUESTIONS[0]}
@@ -147,7 +151,7 @@ function App() {
         variant="success"
         size="lg"
         onClick={onPredict}
-        disabled={!modelLoaded || predicting || question.length === 0}
+        disabled={!modelLoaded || predicting}
       >
         {modelLoaded ? (predicting ? 'Predicting...' : 'Predict') : 'Loading model...'}
       </Button>
