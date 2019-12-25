@@ -54,7 +54,7 @@ function App() {
         setPredicting(false);
       });
     }
-  // ONLY run this effect when changing predicting to true
+    // ONLY run this effect when changing predicting to true
   }, [predicting]);
 
   const onQuestionChange = useCallback(
@@ -116,7 +116,9 @@ function App() {
             />
             <br />
             <Card.Text>Want a different image?</Card.Text>
-            <Button onClick={randomizeImage}>Random Image</Button>
+            <Button onClick={randomizeImage} disabled={predicting}>
+              Random Image
+            </Button>
           </Card.Body>
         </Card>
         <Card>
@@ -130,11 +132,14 @@ function App() {
                   placeholder={SAMPLE_QUESTIONS[0]}
                   value={question}
                   onChange={onQuestionChange}
+                  disabled={predicting}
                 />
               </Form.Group>
             </Form>
             <Card.Text>Want a different question?</Card.Text>
-            <Button onClick={randomizeQuestion}>Random Question</Button>
+            <Button onClick={randomizeQuestion} disabled={predicting}>
+              Random Question
+            </Button>
           </Card.Body>
         </Card>
       </div>
