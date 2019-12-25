@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
-import { getInference } from './model';
+import { getInference, loadModelPromise } from './model';
 import { IMAGE_SIZE, MIN_SHAPE_SIZE, MAX_SHAPE_SIZE, COLORS } from './constants';
 import { randint } from './utils';
 
@@ -31,6 +31,7 @@ const SAMPLE_QUESTIONS = [
 function App() {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState(null);
+  const [modelLoaded, setModelLoaded] = useState(false);
 
   const mainCanvas = useRef(null);
   const smallCanvas = useRef(null);
@@ -81,7 +82,13 @@ function App() {
     setQuestion(q);
   }, []);
 
-  useEffect(randomizeImage, []);
+  useEffect(() => {
+    randomizeImage();
+
+    loadModelPromise.then(() => {
+      setModelLoaded(true);
+    });
+  }, []);
 
   return (
     <div className="root">
@@ -126,8 +133,13 @@ function App() {
           </Card.Body>
         </Card>
       </div>
-      <Button variant="success" size="lg" onClick={onPredict} disabled={question.length === 0}>
-        Predict
+      <Button
+        variant="success"
+        size="lg"
+        onClick={onPredict}
+        disabled={!modelLoaded || question.length === 0}
+      >
+        {modelLoaded ? 'Predict' : 'Loading model...'}
       </Button>
       <br />
       {!!answer && (
