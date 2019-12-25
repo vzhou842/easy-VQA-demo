@@ -1,9 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 
 import { getInference } from './model';
 import { IMAGE_SIZE, MIN_SHAPE_SIZE, MAX_SHAPE_SIZE, COLORS } from './constants';
 import { randint } from './utils';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const CANVAS_SIZE = 256;
@@ -18,22 +23,28 @@ function App() {
   const mainCanvas = useRef(null);
   const smallCanvas = useRef(null);
 
-  const onSubmit = useCallback(async e => {
-    e.preventDefault();
+  const onPredict = useCallback(
+    async e => {
+      e.preventDefault();
 
-    // Draw the main canvas to our smaller, correctly-sized canvas
-    const ctx = smallCanvas.current.getContext('2d');
-    const ratio = IMAGE_SIZE / CANVAS_SIZE;
-    ctx.scale(ratio, ratio);
-    ctx.drawImage(mainCanvas.current, 0, 0);
+      // Draw the main canvas to our smaller, correctly-sized canvas
+      const ctx = smallCanvas.current.getContext('2d');
+      const ratio = IMAGE_SIZE / CANVAS_SIZE;
+      ctx.scale(ratio, ratio);
+      ctx.drawImage(mainCanvas.current, 0, 0);
 
-    const answer = await getInference(smallCanvas.current, question);
-    setAnswer(answer);
-  }, [question, setAnswer]);
+      const answer = await getInference(smallCanvas.current, question);
+      setAnswer(answer);
+    },
+    [question, setAnswer]
+  );
 
-  const onQuestionChange = useCallback(e => {
-    setQuestion(e.target.value);
-  }, [setQuestion]);
+  const onQuestionChange = useCallback(
+    e => {
+      setQuestion(e.target.value);
+    },
+    [setQuestion]
+  );
 
   const randomizeImage = useCallback(() => {
     const context = mainCanvas.current.getContext('2d');
@@ -50,34 +61,55 @@ function App() {
     context.fillStyle = COLORS[randint(0, COLORS.length - 1)];
     const w = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
     const h = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
-    context.fillRect(
-      randint(0, CANVAS_SIZE - w),
-      randint(0, CANVAS_SIZE - h),
-      w,
-      h,
-    );
+    context.fillRect(randint(0, CANVAS_SIZE - w), randint(0, CANVAS_SIZE - h), w, h);
   }, [mainCanvas]);
 
   useEffect(randomizeImage, []);
 
   return (
-    <div className="App">
-      <canvas ref={mainCanvas} width={CANVAS_SIZE} height={CANVAS_SIZE} />
-      <canvas ref={smallCanvas} width={IMAGE_SIZE} height={IMAGE_SIZE} style={{ display: 'none' }} />
-      <button onClick={randomizeImage}>Randomize Image</button>
-      <form onSubmit={onSubmit}>
-        <label>Enter a question:</label>
-        <input
-          type="text"
-          placeholder="What color is the shape?"
-          value={question}
-          onChange={onQuestionChange}
-        />
-        <br />
-        <input type="submit" />
-      </form>
+    <div className="root">
+      <h1>easy-VQA Demo</h1>
+      <div className="container">
+        <Card>
+          <Card.Header>The Image</Card.Header>
+          <Card.Body>
+            <canvas ref={mainCanvas} width={CANVAS_SIZE} height={CANVAS_SIZE} style={{ marginBottom: 10 }} />
+            <canvas
+              ref={smallCanvas}
+              width={IMAGE_SIZE}
+              height={IMAGE_SIZE}
+              style={{ display: 'none' }}
+            />
+            <br />
+            <Card.Text>Want a different image?</Card.Text>
+            <Button onClick={randomizeImage}>Randomize Image</Button>
+          </Card.Body>
+        </Card>
+        <Card>
+          <Card.Header>The Question</Card.Header>
+          <Card.Body>
+            <Form>
+              <Form.Group controlId="formQuestion">
+                <Form.Label>Enter a question:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="What color is the shape?"
+                  value={question}
+                  onChange={onQuestionChange}
+                />
+              </Form.Group>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
+      <Button variant="success" size="lg" onClick={onPredict}>
+        Predict
+      </Button>
+      <br />
       {!!answer && (
-        <p>Prediction: <b>{answer}</b></p>
+        <Alert variant="primary">
+          Prediction: <b>{answer}</b>
+        </Alert>
       )}
     </div>
   );
