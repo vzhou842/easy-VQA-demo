@@ -17,15 +17,15 @@ const MIN_CANVAS_SHAPE_SIZE = MIN_SHAPE_SIZE * CANVAS_RATIO;
 const MAX_CANVAS_SHAPE_SIZE = MAX_SHAPE_SIZE * CANVAS_RATIO;
 
 const SAMPLE_QUESTIONS = [
-  "What color is the shape?",
-  "Is there a blue shape in the image?",
-  "Is there a red shape in the image?",
-  "Does the image contain a rectangle?",
-  "What shape is present?",
-  "Is no triangle present?",
-  "Is a circle present?",
-  "What is the color of the shape?",
-  "What shape does the image contain?",
+  'What color is the shape?',
+  'Is there a blue shape in the image?',
+  'Is there a red shape in the image?',
+  'Does the image contain a rectangle?',
+  'What shape is present?',
+  'Is no triangle present?',
+  'Is a circle present?',
+  'What is the color of the shape?',
+  'What shape does the image contain?',
 ];
 
 function App() {
@@ -90,7 +90,12 @@ function App() {
         <Card>
           <Card.Header>The Image</Card.Header>
           <Card.Body>
-            <canvas ref={mainCanvas} width={CANVAS_SIZE} height={CANVAS_SIZE} style={{ marginBottom: 10 }} />
+            <canvas
+              ref={mainCanvas}
+              width={CANVAS_SIZE}
+              height={CANVAS_SIZE}
+              style={{ marginBottom: 10 }}
+            />
             <canvas
               ref={smallCanvas}
               width={IMAGE_SIZE}
@@ -121,7 +126,7 @@ function App() {
           </Card.Body>
         </Card>
       </div>
-      <Button variant="success" size="lg" onClick={onPredict}>
+      <Button variant="success" size="lg" onClick={onPredict} disabled={question.length === 0}>
         Predict
       </Button>
       <br />
