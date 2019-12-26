@@ -146,19 +146,18 @@ function App() {
           </Card.Body>
         </Card>
       </div>
-      <Button
-        variant="success"
-        size="lg"
-        onClick={onPredict}
-        disabled={!modelLoaded || predicting}
-      >
+      <Button variant="success" size="lg" onClick={onPredict} disabled={!modelLoaded || predicting}>
         {modelLoaded ? (predicting ? 'Predicting...' : 'Predict') : 'Loading model...'}
       </Button>
       <br />
-      {!!answer && (
+      {!!answer ? (
         <Alert variant="primary">
           Prediction: <b>{answer}</b>
         </Alert>
+      ) : predicting ? (
+        <Alert variant="light">The prediction will appear here soon...</Alert>
+      ) : (
+        <Alert variant="light">Click Predict!</Alert>
       )}
     </div>
   );
