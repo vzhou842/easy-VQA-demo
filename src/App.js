@@ -59,8 +59,7 @@ function App() {
         setPredicting(false);
       });
     }
-    // ONLY run this effect when changing predicting to true
-  }, [predicting]);
+  }, [predicting, question]);
 
   const onQuestionChange = useCallback(
     e => {
