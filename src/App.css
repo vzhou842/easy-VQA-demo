@@ -20,6 +20,11 @@
   margin-bottom: 0.5rem;
 }
 
+.image-caption {
+  text-align: center;
+  font-size: 12px;
+}
+
 @media only screen and (max-width: 720px) {
   .card {
     margin: 5px;

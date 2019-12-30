@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
 import { getInference, loadModelPromise } from './model';
-import { IMAGE_SIZE, MIN_SHAPE_SIZE, MAX_SHAPE_SIZE, COLORS } from './constants';
+import { IMAGE_SIZE, MIN_SHAPE_SIZE, MAX_SHAPE_SIZE, COLORS, COLOR_NAMES } from './constants';
 import { randint } from './utils';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -34,6 +34,7 @@ const SAMPLE_QUESTIONS = [
 const randomQuestion = () => SAMPLE_QUESTIONS[randint(0, SAMPLE_QUESTIONS.length - 1)];
 
 function App() {
+  const [color, setColor] = useState(null);
   const [question, setQuestion] = useState(randomQuestion());
   const [answer, setAnswer] = useState(null);
   const [modelLoaded, setModelLoaded] = useState(false);
@@ -87,11 +88,13 @@ function App() {
     context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
     // Shape
-    context.fillStyle = COLORS[randint(0, COLORS.length - 1)];
+    const colorName = COLOR_NAMES[randint(0, COLOR_NAMES.length - 1)];
+    context.fillStyle = COLORS[colorName];
     const w = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
     const h = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
     context.fillRect(randint(0, CANVAS_SIZE - w), randint(0, CANVAS_SIZE - h), w, h);
 
+    setColor(colorName);
     setAnswer(null);
   }, [mainCanvas]);
 
@@ -119,18 +122,16 @@ function App() {
         <Card>
           <Card.Header>The Image</Card.Header>
           <Card.Body>
-            <canvas
-              ref={mainCanvas}
-              width={CANVAS_SIZE}
-              height={CANVAS_SIZE}
-              style={{ marginBottom: 10 }}
-            />
+            <canvas ref={mainCanvas} width={CANVAS_SIZE} height={CANVAS_SIZE} />
             <canvas
               ref={smallCanvas}
               width={IMAGE_SIZE}
               height={IMAGE_SIZE}
               style={{ display: 'none' }}
             />
+            <figcaption className="image-caption">
+              A <b>{color}</b>, <b>rectangle</b> shape.
+            </figcaption>
             <br />
             <Card.Text>Want a different image?</Card.Text>
             <Button onClick={randomizeImage} disabled={predicting}>

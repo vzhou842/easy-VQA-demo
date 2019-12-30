@@ -8,16 +8,17 @@ const IMAGE_SIZE = 64;
 const MIN_SHAPE_SIZE = IMAGE_SIZE / 8;
 const MAX_SHAPE_SIZE = IMAGE_SIZE / 2;
 
-const COLORS = [
-  'black',
-  'rgb(128, 128, 128)', // gray
-  'red',
-  'green',
-  'blue',
-  'yellow',
-  'teal',
-  'rgb(165, 42, 42)', // brown
-];
+const COLORS = {
+  black: 'black',
+  gray: 'rgb(128, 128, 128)',
+  red: 'red',
+  green: 'green',
+  blue: 'blue',
+  yellow: 'yellow',
+  teal: 'teal',
+  brown: 'rgb(165, 42, 42)',
+};
+const COLOR_NAMES = Object.keys(COLORS);
 
 export {
   WORD_INDEX,
@@ -26,4 +27,5 @@ export {
   MIN_SHAPE_SIZE,
   MAX_SHAPE_SIZE,
   COLORS,
+  COLOR_NAMES,
 };
