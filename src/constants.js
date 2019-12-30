@@ -4,6 +4,7 @@
 const WORD_INDEX = {'is': 1, 'shape': 2, 'the': 3, 'a': 4, 'image': 5, 'there': 6, 'not': 7, 'what': 8, 'in': 9, 'does': 10, 'contain': 11, 'present': 12, 'color': 13, 'no': 14, 'triangle': 15, 'circle': 16, 'rectangle': 17, 'green': 18, 'gray': 19, 'blue': 20, 'black': 21, 'brown': 22, 'teal': 23, 'yellow': 24, 'red': 25, 'of': 26};
 const ANSWERS = ['no', 'rectangle', 'circle', 'yes', 'teal', 'blue', 'green', 'yellow', 'gray', 'black', 'brown', 'red', 'triangle'];
 
+const CANVAS_SIZE = 256;
 const IMAGE_SIZE = 64;
 const MIN_SHAPE_SIZE = IMAGE_SIZE / 8;
 const MAX_SHAPE_SIZE = IMAGE_SIZE / 2;
@@ -23,6 +24,7 @@ const COLOR_NAMES = Object.keys(COLORS);
 export {
   WORD_INDEX,
   ANSWERS,
+  CANVAS_SIZE,
   IMAGE_SIZE,
   MIN_SHAPE_SIZE,
   MAX_SHAPE_SIZE,

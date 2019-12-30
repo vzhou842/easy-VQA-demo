@@ -4,17 +4,13 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
+import { drawRectangle } from './draw';
 import { getInference, loadModelPromise } from './model';
-import { IMAGE_SIZE, MIN_SHAPE_SIZE, MAX_SHAPE_SIZE, COLORS, COLOR_NAMES } from './constants';
+import { CANVAS_SIZE, IMAGE_SIZE, COLOR_NAMES } from './constants';
 import { randint } from './utils';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-
-const CANVAS_SIZE = 256;
-const CANVAS_RATIO = CANVAS_SIZE / IMAGE_SIZE;
-const MIN_CANVAS_SHAPE_SIZE = MIN_SHAPE_SIZE * CANVAS_RATIO;
-const MAX_CANVAS_SHAPE_SIZE = MAX_SHAPE_SIZE * CANVAS_RATIO;
 
 const SAMPLE_QUESTIONS = [
   'What color is the shape?',
@@ -78,21 +74,9 @@ function App() {
 
   const randomizeImage = useCallback(() => {
     const context = mainCanvas.current.getContext('2d');
-
-    // Background color
-    // The range (230, 255) matches the corresponding range in easy-VQA
-    const r = randint(230, 255);
-    const g = randint(230, 255);
-    const b = randint(230, 255);
-    context.fillStyle = `rgb(${r}, ${g}, ${b})`;
-    context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-
-    // Shape
     const colorName = COLOR_NAMES[randint(0, COLOR_NAMES.length - 1)];
-    context.fillStyle = COLORS[colorName];
-    const w = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
-    const h = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
-    context.fillRect(randint(0, CANVAS_SIZE - w), randint(0, CANVAS_SIZE - h), w, h);
+
+    drawRectangle(context, colorName);
 
     setColor(colorName);
     setAnswer(null);
