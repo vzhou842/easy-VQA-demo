@@ -47,10 +47,12 @@ function App() {
   }, [setPredicting]);
 
   useEffect(() => {
-    const ctx = smallCanvas.current.getContext('2d');
-    const ratio = IMAGE_SIZE / CANVAS_SIZE;
-    ctx.scale(ratio, ratio);
-  }, [smallCanvas.current]);
+    if (smallCanvas.current) {
+      const ctx = smallCanvas.current.getContext('2d');
+      const ratio = IMAGE_SIZE / CANVAS_SIZE;
+      ctx.scale(ratio, ratio);
+    }
+  }, [smallCanvas]);
 
   useEffect(() => {
     if (predicting) {
