@@ -68,6 +68,7 @@ function App() {
   const onQuestionChange = useCallback(
     e => {
       setQuestion(e.target.value);
+      setAnswer(null);
     },
     [setQuestion]
   );
@@ -88,12 +89,18 @@ function App() {
     const w = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
     const h = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
     context.fillRect(randint(0, CANVAS_SIZE - w), randint(0, CANVAS_SIZE - h), w, h);
+
+    setAnswer(null);
   }, [mainCanvas]);
 
   const randomizeQuestion = useCallback(() => {
-    const q = randomQuestion();
+    let q = question;
+    while (q === question) {
+      q = randomQuestion();
+    }
     setQuestion(q);
-  }, [setQuestion]);
+    setAnswer(null);
+  }, [question, setQuestion]);
 
   useEffect(() => {
     randomizeImage();
