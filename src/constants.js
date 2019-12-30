@@ -21,6 +21,11 @@ const COLORS = {
 };
 const COLOR_NAMES = Object.keys(COLORS);
 
+const SHAPES = [
+  'rectangle',
+  'circle',
+];
+
 export {
   WORD_INDEX,
   ANSWERS,
@@ -30,4 +35,5 @@ export {
   MAX_SHAPE_SIZE,
   COLORS,
   COLOR_NAMES,
+  SHAPES,
 };

@@ -4,9 +4,9 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
-import { drawRectangle } from './draw';
+import { drawShape } from './draw';
 import { getInference, loadModelPromise } from './model';
-import { CANVAS_SIZE, IMAGE_SIZE, COLOR_NAMES } from './constants';
+import { CANVAS_SIZE, IMAGE_SIZE, COLOR_NAMES, SHAPES } from './constants';
 import { randint } from './utils';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,6 +31,7 @@ const randomQuestion = () => SAMPLE_QUESTIONS[randint(0, SAMPLE_QUESTIONS.length
 
 function App() {
   const [color, setColor] = useState(null);
+  const [shape, setShape] = useState(null);
   const [question, setQuestion] = useState(randomQuestion());
   const [answer, setAnswer] = useState(null);
   const [modelLoaded, setModelLoaded] = useState(false);
@@ -75,10 +76,12 @@ function App() {
   const randomizeImage = useCallback(() => {
     const context = mainCanvas.current.getContext('2d');
     const colorName = COLOR_NAMES[randint(0, COLOR_NAMES.length - 1)];
+    const shape = SHAPES[randint(0, SHAPES.length - 1)];
 
-    drawRectangle(context, colorName);
+    drawShape(context, shape, colorName);
 
     setColor(colorName);
+    setShape(shape);
     setAnswer(null);
   }, [mainCanvas]);
 
@@ -114,7 +117,7 @@ function App() {
               style={{ display: 'none' }}
             />
             <figcaption className="image-caption">
-              A <b>{color}</b>, <b>rectangle</b> shape.
+              A <b>{color}</b>, <b>{shape}</b> shape.
             </figcaption>
             <br />
             <Card.Text>Want a different image?</Card.Text>

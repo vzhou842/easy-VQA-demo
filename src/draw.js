@@ -5,18 +5,47 @@ const CANVAS_RATIO = CANVAS_SIZE / IMAGE_SIZE;
 const MIN_CANVAS_SHAPE_SIZE = MIN_SHAPE_SIZE * CANVAS_RATIO;
 const MAX_CANVAS_SHAPE_SIZE = MAX_SHAPE_SIZE * CANVAS_RATIO;
 
-export function drawRectangle(context, colorName) {
-  // Background color
+function drawBackground(context) {
   // The range (230, 255) matches the corresponding range in easy-VQA
   const r = randint(230, 255);
   const g = randint(230, 255);
   const b = randint(230, 255);
   context.fillStyle = `rgb(${r}, ${g}, ${b})`;
   context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+}
 
-  // Shape
+function drawRectangle(context, colorName) {
   context.fillStyle = COLORS[colorName];
   const w = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
   const h = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
   context.fillRect(randint(0, CANVAS_SIZE - w), randint(0, CANVAS_SIZE - h), w, h);
+}
+
+function drawCircle(context, colorName) {
+  context.fillStyle = COLORS[colorName];
+  const r = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
+  context.beginPath();
+  context.arc(
+    randint(r, CANVAS_SIZE - r),
+    randint(r, CANVAS_SIZE - r),
+    r,
+    0,
+    2 * Math.PI,
+  );
+  context.fill();
+}
+
+export function drawShape(context, shape, colorName) {
+  drawBackground(context);
+
+  switch (shape) {
+    case 'rectangle':
+      drawRectangle(context, colorName);
+      break;
+    case 'circle':
+      drawCircle(context, colorName);
+    default:
+      console.error('Invalid shape name provided', shape);
+      break;
+  }
 }
