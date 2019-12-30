@@ -47,11 +47,15 @@ function App() {
   }, [setPredicting]);
 
   useEffect(() => {
+    const ctx = smallCanvas.current.getContext('2d');
+    const ratio = IMAGE_SIZE / CANVAS_SIZE;
+    ctx.scale(ratio, ratio);
+  }, [smallCanvas.current]);
+
+  useEffect(() => {
     if (predicting) {
       // Draw the main canvas to our smaller, correctly-sized canvas
       const ctx = smallCanvas.current.getContext('2d');
-      const ratio = IMAGE_SIZE / CANVAS_SIZE;
-      ctx.scale(ratio, ratio);
       ctx.drawImage(mainCanvas.current, 0, 0);
 
       getInference(smallCanvas.current, question).then(answer => {
