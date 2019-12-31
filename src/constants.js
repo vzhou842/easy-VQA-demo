@@ -24,6 +24,7 @@ const COLOR_NAMES = Object.keys(COLORS);
 const SHAPES = [
   'rectangle',
   'circle',
+  'triangle',
 ];
 
 export {

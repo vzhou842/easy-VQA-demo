@@ -23,13 +23,20 @@ function drawRectangle(context) {
 function drawCircle(context) {
   const r = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE) / 2;
   context.beginPath();
-  context.arc(
-    randint(r, CANVAS_SIZE - r),
-    randint(r, CANVAS_SIZE - r),
-    r,
-    0,
-    2 * Math.PI,
-  );
+  context.arc(randint(r, CANVAS_SIZE - r), randint(r, CANVAS_SIZE - r), r, 0, 2 * Math.PI);
+  context.fill();
+}
+
+const SIN_60 = Math.sqrt(3) / 2;
+function drawTriangle(context) {
+  const s = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
+  let x = randint(0, CANVAS_SIZE - s);
+  let y = randint(Math.ceil(s * SIN_60), CANVAS_SIZE);
+  context.beginPath();
+  context.moveTo(x, y);
+  context.lineTo(x + s, y);
+  context.lineTo(x + s / 2, y - s * SIN_60);
+  context.lineTo(x, y);
   context.fill();
 }
 
@@ -43,6 +50,10 @@ export function drawShape(context, shape, colorName) {
       break;
     case 'circle':
       drawCircle(context);
+      break;
+    case 'triangle':
+      drawTriangle(context);
+      break;
     default:
       console.error('Invalid shape name provided', shape);
       break;
