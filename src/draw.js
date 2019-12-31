@@ -21,7 +21,7 @@ function drawRectangle(context) {
 }
 
 function drawCircle(context) {
-  const r = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
+  const r = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE) / 2;
   context.beginPath();
   context.arc(
     randint(r, CANVAS_SIZE - r),
