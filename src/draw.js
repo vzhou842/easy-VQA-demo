@@ -14,15 +14,13 @@ function drawBackground(context) {
   context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 }
 
-function drawRectangle(context, colorName) {
-  context.fillStyle = COLORS[colorName];
+function drawRectangle(context) {
   const w = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
   const h = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
   context.fillRect(randint(0, CANVAS_SIZE - w), randint(0, CANVAS_SIZE - h), w, h);
 }
 
-function drawCircle(context, colorName) {
-  context.fillStyle = COLORS[colorName];
+function drawCircle(context) {
   const r = randint(MIN_CANVAS_SHAPE_SIZE, MAX_CANVAS_SHAPE_SIZE);
   context.beginPath();
   context.arc(
@@ -38,12 +36,13 @@ function drawCircle(context, colorName) {
 export function drawShape(context, shape, colorName) {
   drawBackground(context);
 
+  context.fillStyle = COLORS[colorName];
   switch (shape) {
     case 'rectangle':
-      drawRectangle(context, colorName);
+      drawRectangle(context);
       break;
     case 'circle':
-      drawCircle(context, colorName);
+      drawCircle(context);
     default:
       console.error('Invalid shape name provided', shape);
       break;
