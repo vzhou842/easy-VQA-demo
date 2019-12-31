@@ -2,6 +2,8 @@
 
 A demo of a [Keras](https://keras.io/) model trained on the [easy-VQA](https://github.com/vzhou842/easy-VQA) (Easy Visual Question Answering) dataset.
 
+The model used in the demo is closely based on [easy-VQA-keras](https://github.com/vzhou842/easy-VQA-keras).
+
 See the demo live at https://easy-vqa-demo.victorzhou.com.
 
 ## About the Demo
