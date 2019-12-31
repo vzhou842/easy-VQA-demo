@@ -1,8 +1,8 @@
 // All of these constants should be kept in sync with their counterparts in easy-VQA,
 // the repo that contains the code to generate the dataset.
 
-const WORD_INDEX = {'is': 1, 'shape': 2, 'the': 3, 'a': 4, 'image': 5, 'there': 6, 'not': 7, 'what': 8, 'in': 9, 'does': 10, 'contain': 11, 'present': 12, 'color': 13, 'no': 14, 'triangle': 15, 'circle': 16, 'rectangle': 17, 'green': 18, 'gray': 19, 'blue': 20, 'black': 21, 'brown': 22, 'teal': 23, 'yellow': 24, 'red': 25, 'of': 26};
-const ANSWERS = ['no', 'rectangle', 'circle', 'yes', 'teal', 'blue', 'green', 'yellow', 'gray', 'black', 'brown', 'red', 'triangle'];
+const WORD_INDEX = {'is': 1, 'shape': 2, 'the': 3, 'a': 4, 'image': 5, 'there': 6, 'not': 7, 'what': 8, 'does': 9, 'contain': 10, 'in': 11, 'present': 12, 'color': 13, 'no': 14, 'triangle': 15, 'rectangle': 16, 'circle': 17, 'teal': 18, 'gray': 19, 'brown': 20, 'blue': 21, 'green': 22, 'yellow': 23, 'red': 24, 'black': 25, 'of': 26};
+const ANSWERS = ['green', 'triangle', 'no', 'rectangle', 'gray', 'red', 'blue', 'yes', 'circle', 'black', 'yellow', 'brown', 'teal'];
 
 const CANVAS_SIZE = 256;
 const IMAGE_SIZE = 64;
