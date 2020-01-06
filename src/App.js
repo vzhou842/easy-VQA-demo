@@ -108,6 +108,26 @@ function App() {
   return (
     <div className="root">
       <h1>easy-VQA Demo</h1>
+      <h2>
+        A Javascript demo of a{' '}
+        <a href="https://victorzhou.com/blog/easy-vqa/">Visual Question Answering (VQA)</a> model
+        trained on the{' '}
+        <a href="https://github.com/vzhou842/easy-VQA" target="_blank" rel="nofollow noreferrer">
+          easy-VQA dataset
+        </a>
+        .
+      </h2>
+      <p className="description">
+        Source code for this demo available on{' '}
+        <a
+          href="https://github.com/vzhou842/easy-VQA-demo"
+          target="_blank"
+          rel="nofollow noreferrer"
+        >
+          Github
+        </a>
+        .
+      </p>
       <div className="container">
         <Card>
           <Card.Header>The Image</Card.Header>

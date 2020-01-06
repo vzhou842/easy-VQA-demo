@@ -1,3 +1,16 @@
+h1, h2, p.description {
+  text-align: center;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+p.description {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
 .root {
   display: flex;
   flex-direction: column;
