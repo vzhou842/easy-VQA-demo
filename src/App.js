@@ -133,7 +133,7 @@ function App() {
               target="_blank"
               rel="nofollow noreferrer"
             >
-              `` Github
+              Github
             </a>
             .
           </p>
