@@ -13,3 +13,12 @@ The demo web app was made using [create-react-app](https://github.com/facebook/c
 The demo model uses [TensorFlow.js](https://www.tensorflow.org/js) to run predictions using pre-trained weights directly in the browser.
 
 The pre-trained Keras model is available at `public/model.h5`. It was converted to `public/model.json` using the official [TensorFlow.js converter](https://www.tensorflow.org/js/guide/conversion).
+
+## Setup
+
+```
+git clone https://github.com/vzhou842/easy-VQA-demo.git
+cd easy-VQA-demo
+npm install
+npm start
+```
