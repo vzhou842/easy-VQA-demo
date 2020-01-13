@@ -127,7 +127,7 @@ function App() {
             .
           </h2>
           <p className="description">
-            <b>Read the <a href="https://victorzhou.com/blog/easy-vqa/">blog post</a></b>or see the source code on{' '}
+            <b>Read the <a href="https://victorzhou.com/blog/easy-vqa/">blog post</a></b> or see the source code on{' '}
             <a
               href="https://github.com/vzhou842/easy-VQA-demo"
               target="_blank"
